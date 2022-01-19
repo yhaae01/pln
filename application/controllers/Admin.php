@@ -7,11 +7,16 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('username')) {
+        if (!$this->session->userdata('id_level')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
                 Silahkan login terlebih dahulu!
             </div>');
             redirect('auth/login_admin');
+        } elseif ($this->session->userdata('id_tarif')){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                Oops! Anda tidak punya akses.
+            </div>');
+            redirect('pelanggan');
         }
     }
 
