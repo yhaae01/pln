@@ -46,9 +46,9 @@ class Auth extends CI_Controller
             $this->load->view('templates/auth_footer');
         } else {
             $data = [
-                'username'   => $this->input->post('username'),
-                'password'   => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'nama_admin' => htmlspecialchars($this->input->post('nama_admin')),
+                'username'   => htmlspecialchars($this->input->post('username')),
+                'password'   => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
+                'nama_admin' => htmlspecialchars($this->input->post('nama_admin', true)),
                 'id_level'   => 1
             ];
 
