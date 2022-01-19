@@ -31,10 +31,10 @@
                                         Login
                                     </button>
                                 </form>
-                                <hr>
+                                <!-- <hr>
                                 <div class="text-center">
                                     <a class="small" href="<?= base_url('auth/register_admin') ?>">Daftar Akun!</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
