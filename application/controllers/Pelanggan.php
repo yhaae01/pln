@@ -17,7 +17,7 @@ class Pelanggan extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user'] = $this->db->get_where('pelanggan', ['username' => $this->session->userdata('username')])->row_array();
         $data['title'] = 'Dashboard Pelanggan';
 
         $this->load->view('templates/header', $data);

@@ -124,6 +124,7 @@ class Auth extends CI_Controller
                 if (password_verify($password, $user['password'])) {
                     $data = [
                         'username' => $user['username'],
+                        'id_tarif' => $user['id_tarif'],
                     ];
                     $this->session->set_userdata($data); // Menyimpan data di session
                     redirect('pelanggan');

@@ -33,7 +33,11 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                    <a class="btn btn-primary" href="<?= base_url('auth/logout') ?>">Logout</a>
+                    <?php if ($this->session->userdata('id_level')) : ?>
+                        <a class="btn btn-primary" href="<?= base_url('auth/logout_admin') ?>">Logout</a>
+                    <?php elseif ($this->session->userdata('id_tarif')) : ?>
+                        <a class="btn btn-primary" href="<?= base_url('auth/logout_pelanggan') ?>">Logout</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

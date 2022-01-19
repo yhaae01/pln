@@ -21,7 +21,11 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= ucwords($user['nama_admin']); ?></span>
+                                <?php if ($this->session->userdata('id_level')) : ?>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= ucwords($user['nama_admin']); ?></span>
+                                <?php elseif ($this->session->userdata('id_tarif')) : ?>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= ucwords($user['nama_pelanggan']); ?></span>
+                                <?php endif; ?>
                                 <img class="img-profile rounded-circle"
                                     src="<?= base_url('assets/img/default.png') ?>" alt="No Image">
                             </a>
