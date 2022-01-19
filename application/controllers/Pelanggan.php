@@ -12,11 +12,6 @@ class Pelanggan extends CI_Controller
                 Silahkan login terlebih dahulu!
             </div>');
             redirect('auth/login_pelanggan');
-        } elseif ($this->session->userdata('id_level')) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-                Oops! Anda tidak punya akses.
-            </div>');
-            redirect('admin');
         }
     }
 

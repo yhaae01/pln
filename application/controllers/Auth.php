@@ -9,6 +9,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model('Auth_model', 'auth');
     }
     
     public function login_admin()
@@ -81,19 +82,7 @@ class Auth extends CI_Controller
             $this->load->view('auth/admin/register_admin');
             $this->load->view('templates/auth_footer');
         } else {
-            $data = [
-                'username'   => htmlspecialchars($this->input->post('username')),
-                'password'   => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'nama_admin' => htmlspecialchars($this->input->post('nama_admin', true)),
-                'id_level'   => 1
-            ];
-
-            $this->db->insert('user', $data);
-            
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-                Berhasil daftar akun! Silahkan login.
-            </div>');
-            redirect('auth/login_admin');
+            $this->auth->register_admin();
         }
     }
 
@@ -156,12 +145,21 @@ class Auth extends CI_Controller
         ]);
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[8]|matches[password2]',[
             'matches' => 'Password tidak sama!',
-            'min_length' => 'Minimal 8 karakter!'
+            'min_length' => 'Minimal 8 karakter!',
+            'required' => 'Password harus diisi!'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
-        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[20]');
-        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|max_length[20]');
-        $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required|trim');
+        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[11]',[
+            'numeric' => 'Hanya bisa menggunakan angka!',
+            'required' => 'Nomor KWH harus diisi!',
+            'max_length' => 'Maksimal 11 karakter!'
+        ]);
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
+            'required' => 'Alamat harus diisi!'
+        ]);
+        $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required|trim',[
+            'required' => 'ID Tarif harus diisi!'
+        ]);
 
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Registrasi Pelanggan';
@@ -170,21 +168,7 @@ class Auth extends CI_Controller
             $this->load->view('auth/pelanggan/register_pelanggan');
             $this->load->view('templates/auth_footer');
         } else {
-            $data = [
-                'username'       => htmlspecialchars($this->input->post('username', true)),
-                'password'       => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'nomor_kwh'      => htmlspecialchars($this->input->post('nomor_kwh', true)),
-                'nama_pelanggan' => htmlspecialchars($this->input->post('nama_pelanggan', true)),
-                'alamat'         => htmlspecialchars($this->input->post('alamat', true)),
-                'id_tarif'       => $this->input->post('id_tarif')
-            ];
-
-            $this->db->insert('pelanggan', $data);
-            
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-                Berhasil daftar akun! Silahkan login.
-            </div>');
-            redirect('auth/login_pelanggan');
+            $this->auth->register_pelanggan();
         }
     }
 

@@ -2,13 +2,18 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <?php if($this->session->userdata('id_level')) : ?>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin') ?>">
+    <?php elseif ($this->session->userdata('id_tarif')) : ?>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('pelanggan') ?>">
+    <?php endif ?>
         <div class="sidebar-brand-icon">
             <i class="fas fa-bolt"></i>
         </div>
         <div class="sidebar-brand-text mx-3">PLN-Ku </div>
     </a>
 
+    <!-- Admin -->
     <?php if($this->session->userdata('id_level')) : ?>
         <div>
             <!-- Divider -->
@@ -21,27 +26,19 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?= base_url('admin') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading User -->
-            <div class="sidebar-heading">
-                User
-            </div>
-
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?= base_url('admin/pelanggan') ?>">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>User</span></a>
+                    <span>Pelanggan</span></a>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -54,8 +51,10 @@
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
         </div>
+    
+    <!-- Pelanggan -->
     <?php elseif ($this->session->userdata('id_tarif')) : ?>
         <div>
             <!-- Divider -->
