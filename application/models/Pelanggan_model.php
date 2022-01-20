@@ -7,7 +7,7 @@ class Pelanggan_model extends CI_Model
 
     public function getData()
     {
-        $this->db->get('pelanggan')->result_array();
+        return $this->db->get('pelanggan')->result_array();
     }
 
 }
