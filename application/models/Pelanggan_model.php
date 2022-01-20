@@ -10,6 +10,10 @@ class Pelanggan_model extends CI_Model
         return $this->db->get('pelanggan')->result_array();
     }
 
+    public function getUserById($id_pelanggan)
+    {
+        return $this->db->get_where('pelanggan', ['id_pelanggan' => $id_pelanggan])->row_array();
+    }
 }
 
 /* End of file Pelanggan_model.php */

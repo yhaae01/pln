@@ -50,6 +50,11 @@ class Admin extends CI_Controller
 
     public function tambah_pelanggan()
     {
+        $data['title'] = 'Tambah Pelanggan';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required|trim',[
             'required'   => 'Nama Lengkap harus diisi!'
         ]);
@@ -65,10 +70,11 @@ class Admin extends CI_Controller
             'required'   => 'Password harus diisi!'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
-        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[11]',[
+        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[11]|is_unique[pelanggan.nomor_kwh]',[
             'numeric'    => 'Hanya bisa menggunakan angka!',
             'required'   => 'Nomor KWH harus diisi!',
-            'max_length' => 'Maksimal 11 karakter!'
+            'max_length' => 'Maksimal 11 karakter!',
+            'is_unique'  => 'Nomor KWH sudah digunakan!'
         ]);
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
             'required'   => 'Alamat harus diisi!'
@@ -78,18 +84,48 @@ class Admin extends CI_Controller
         ]);
 
         if ($this->form_validation->run() == FALSE) {
-            $data['title'] = 'Tambah Pelanggan';
-            $data['user'] = $this->db->get_where('user', [
-                'username' => $this->session->userdata('username')
-            ])->row_array();
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('admin/pelanggan/tambah_pelanggan');
             $this->load->view('templates/footer');
         } else {
-            $this->admin->tambah_pengguna();
+            $this->admin->tambah_pelanggan();
+        }
+    }
+
+    public function ubah_pelanggan($id_pelanggan)
+    {
+        $data['title'] = 'Ubah Pelanggan';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['pelanggan'] = $this->pelanggan->getUserById($id_pelanggan);
+        
+        $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required|trim',[
+            'required'   => 'Nama Lengkap harus diisi!'
+        ]);
+        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[11]|is_unique[pelanggan.nomor_kwh]',[
+            'numeric'    => 'Hanya bisa menggunakan angka!',
+            'required'   => 'Nomor KWH harus diisi!',
+            'max_length' => 'Maksimal 11 karakter!',
+            'is_unique'  => 'Nomor KWH sudah digunakan!'
+        ]);
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
+            'required'   => 'Alamat harus diisi!'
+        ]);
+        $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required|trim',[
+            'required'   => 'ID Tarif harus diisi!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/pelanggan/ubah_pelanggan');
+            $this->load->view('templates/footer');
+        } else {
+            $this->admin->ubah_pelanggan();
         }
     }
 

@@ -2,33 +2,33 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+        <h1 class="h3 mb-4 text-gray-800"><span class="fas fa-users"></span> <?= $title; ?></h1>
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <?= $this->session->flashdata('message'); ?>
                 <a href="<?= base_url('admin/tambah_pelanggan') ?>" class="btn btn-sm btn-primary mb-3"><span class="fas fa-plus-circle"></span> Tambah Pelanggan</a>
-                <table class="table table-hover">
+                <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nama Pelanggan</th>
                             <th scope="col">Nomor KWH</th>
-                            <th scope="col">Aksi</th>
+                            <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        foreach($pelanggan as $p) : 
                         $no = 1;
+                        foreach($pelanggan as $p) : 
                         ?>
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $p['nama_pelanggan']; ?></td>
                             <td><?= $p['nomor_kwh']; ?></td>
-                            <td>
+                            <td class="text-center">
                                 <a href="" class="badge badge-info"><span class="fas fa-eye"></span> detail</a>
-                                <a href="" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
+                                <a href="<?= base_url('admin/ubah_pelanggan/') . $p['id_pelanggan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
                                 <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_pelanggan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
                             </td>
                         </tr>
@@ -54,7 +54,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach ?>
+                        <?php 
+                        endforeach 
+                        ?>
                     </tbody>
                 </table>
             </div>
