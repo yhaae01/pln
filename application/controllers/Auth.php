@@ -61,16 +61,16 @@ class Auth extends CI_Controller
     public function register_admin()
     {
         $this->form_validation->set_rules('nama_admin', 'Nama Admin', 'required|trim',[
-            'required' => 'Nama Lengkap harus diisi!'
+            'required'   => 'Nama Lengkap harus diisi!'
         ]);
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]|min_length[6]|max_length[20]',[
-            'required' => 'Username harus diisi!',
+            'required'   => 'Username harus diisi!',
             'min_length' => 'Minimal 6 karakter!',
             'max_length' => 'Maksimal 20 karakter!',
-            'is_unique' => 'Username sudah digunakan!'
+            'is_unique'  => 'Username sudah digunakan!'
         ]);
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[8]|matches[password2]',[
-            'matches' => 'Password tidak sama!',
+            'matches'    => 'Password tidak sama!',
             'min_length' => 'Minimal 8 karakter!'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
@@ -135,30 +135,30 @@ class Auth extends CI_Controller
     public function register_pelanggan()
     {
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required|trim',[
-            'required' => 'Nama Lengkap harus diisi!'
+            'required'   => 'Nama Lengkap harus diisi!'
         ]);
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]|min_length[6]|max_length[20]',[
-            'required' => 'Username harus diisi!',
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[pelanggan.username]|min_length[6]|max_length[20]',[
+            'required'   => 'Username harus diisi!',
             'min_length' => 'Minimal 6 karakter!',
             'max_length' => 'Maksimal 20 karakter!',
-            'is_unique' => 'Username sudah digunakan!'
+            'is_unique'  => 'Username sudah digunakan!'
         ]);
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[8]|matches[password2]',[
-            'matches' => 'Password tidak sama!',
+            'matches'    => 'Password tidak sama!',
             'min_length' => 'Minimal 8 karakter!',
-            'required' => 'Password harus diisi!'
+            'required'   => 'Password harus diisi!'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
         $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|max_length[11]',[
-            'numeric' => 'Hanya bisa menggunakan angka!',
-            'required' => 'Nomor KWH harus diisi!',
+            'numeric'    => 'Hanya bisa menggunakan angka!',
+            'required'   => 'Nomor KWH harus diisi!',
             'max_length' => 'Maksimal 11 karakter!'
         ]);
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
-            'required' => 'Alamat harus diisi!'
+            'required'   => 'Alamat harus diisi!'
         ]);
         $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required|trim',[
-            'required' => 'ID Tarif harus diisi!'
+            'required'   => 'ID Tarif harus diisi!'
         ]);
 
         if ($this->form_validation->run() == FALSE) {
@@ -186,6 +186,7 @@ class Auth extends CI_Controller
     public function logout_pelanggan()
     {
         $this->session->unset_userdata('username');
+        $this->session->unset_userdata('id_tarif');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             Berhasil logout.
