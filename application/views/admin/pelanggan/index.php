@@ -27,7 +27,7 @@
                             <td><?= $p['nama_pelanggan']; ?></td>
                             <td><?= $p['nomor_kwh']; ?></td>
                             <td class="text-center">
-                                <a href="" class="badge badge-info"><span class="fas fa-eye"></span> detail</a>
+                                <a href="<?= base_url('admin/detail_pelanggan/') . $p['id_pelanggan'] ?>" class="badge badge-info"><span class="fas fa-eye"></span> detail</a>
                                 <a href="<?= base_url('admin/ubah_pelanggan/') . $p['id_pelanggan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
                                 <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_pelanggan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
                             </td>
