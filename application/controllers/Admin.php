@@ -9,6 +9,7 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Admin_model', 'admin');
+        $this->load->model('Pelanggan_model', 'pelanggan');
         
         if (!$this->session->userdata('id_level')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
@@ -20,8 +21,10 @@ class Admin extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['title'] = 'Dashboard Admin';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -33,8 +36,10 @@ class Admin extends CI_Controller
     public function pelanggan()
     {
         $data['title'] = 'Data Pelanggan';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['pelanggan'] = $this->db->get('pelanggan')->result_array();
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['pelanggan'] = $this->pelanggan->getData();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -74,7 +79,9 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Tambah Pelanggan';
-            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+            $data['user'] = $this->db->get_where('user', [
+                'username' => $this->session->userdata('username')
+            ])->row_array();
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
