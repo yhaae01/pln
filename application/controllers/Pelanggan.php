@@ -56,6 +56,9 @@ class Pelanggan extends CI_Controller
         $this->form_validation->set_rules('bulan', 'Bulan', 'required|trim',[
             'required'   => 'Bulan harus diisi!'
         ]);
+        $this->form_validation->set_rules('tahun', 'Tahun', 'required|trim',[
+            'required'   => 'Tahun harus diisi!'
+        ]);
         $this->form_validation->set_rules('meter_awal', 'meter_awal', 'required|trim|numeric',[
             'required'   => 'Nama Lengkap harus diisi!',
             'numeric'    => 'Meter Awal harus angka!'
