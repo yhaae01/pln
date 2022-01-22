@@ -24,7 +24,7 @@
                     </thead>
                     <?php  
                         $id_pelanggan = $this->session->userdata('id_pelanggan');
-                        $query = "SELECT `pelanggan`.`id_pelanggan`, `penggunaan`.`id_pelanggan`, `nama_pelanggan`, `nomor_kwh`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`
+                        $query = "SELECT `pelanggan`.`id_pelanggan`, `penggunaan`.`id_pelanggan`, `penggunaan`.`id_penggunaan`, `nama_pelanggan`, `nomor_kwh`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`
                                     FROM `pelanggan`
                                     JOIN `penggunaan` 
                                       ON `pelanggan`.`id_pelanggan` = `penggunaan`.`id_pelanggan`
@@ -46,11 +46,11 @@
                             <td><?= $p['meter_akhir']; ?></td>
                             <td class="text-center">
                                 <a href="<?= base_url('pelanggan/ubah_penggunaan/') . $p['id_pelanggan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
-                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_pelanggan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
+                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_penggunaan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
                             </td>
                         </tr>
                         <!-- Modal Hapus -->
-                        <div class="modal fade" id="modalHapus<?= $p['id_pelanggan']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalHapus<?= $p['id_penggunaan']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
@@ -59,9 +59,9 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="<?= base_url('pelanggan/hapus_penggunaan/') . $p['id_pelanggan']; ?>" method="post">
+                                <form action="<?= base_url('pelanggan/hapus_penggunaan/') . $p['id_penggunaan']; ?>" method="post">
                                     <div class="modal-body">
-                                        Yakin ingin hapus penggunaan ?
+                                        Yakin ingin hapus penggunaan bulan <strong><?= $p['bulan']; ?></strong> ?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>

@@ -79,6 +79,11 @@ class Pelanggan extends CI_Controller
         }
     }
 
+    public function hapus_penggunaan($id_penggunaan)
+    {
+        $this->pelanggan->hapus_penggunaan($id_penggunaan);
+    }
+
 }
 
 /* End of file pelanggan.php */

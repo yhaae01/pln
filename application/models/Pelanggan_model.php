@@ -32,6 +32,18 @@ class Pelanggan_model extends CI_Model
         </div>');
         redirect('pelanggan/penggunaan');
     }
+
+    public function hapus_penggunaan($id_penggunaan)
+    {
+        $this->db->delete('penggunaan', ['id_penggunaan' => $id_penggunaan]);
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data penggunaan berhasil dihapus.
+            </div>'
+        );
+        redirect('pelanggan/penggunaan');
+    }
 }
 
 /* End of file Pelanggan_model.php */
