@@ -45,7 +45,7 @@
                             <td><?= $p['meter_awal']; ?></td>
                             <td><?= $p['meter_akhir']; ?></td>
                             <td class="text-center">
-                                <a href="<?= base_url('pelanggan/ubah_penggunaan/') . $p['id_pelanggan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
+                                <a href="<?= base_url('pelanggan/ubah_penggunaan/') . $p['id_penggunaan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
                                 <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_penggunaan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
                             </td>
                         </tr>

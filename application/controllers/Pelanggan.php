@@ -79,6 +79,40 @@ class Pelanggan extends CI_Controller
         }
     }
 
+    public function ubah_penggunaan($id_penggunaan)
+    {
+        $data['user'] = $this->db->get_where('pelanggan', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['title'] = 'Ubah Penggunaan';
+        $data['penggunaan'] = $this->pelanggan->getPenggunaanById($id_penggunaan);
+
+        $this->form_validation->set_rules('bulan', 'Bulan', 'required|trim',[
+            'required'   => 'Bulan harus diisi!'
+        ]);
+        $this->form_validation->set_rules('tahun', 'Tahun', 'required|trim',[
+            'required'   => 'Tahun harus diisi!'
+        ]);
+        $this->form_validation->set_rules('meter_awal', 'meter_awal', 'required|trim|numeric',[
+            'required'   => 'Nama Lengkap harus diisi!',
+            'numeric'    => 'Meter Awal harus angka!'
+        ]);
+        $this->form_validation->set_rules('meter_akhir', 'meter_akhir', 'required|trim|numeric',[
+            'required'   => 'Nama Lengkap harus diisi!',
+            'numeric'    => 'Meter Akhir harus angka!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('pelanggan/penggunaan/ubah_penggunaan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->pelanggan->ubah_penggunaan();
+        }
+    }
+
     public function hapus_penggunaan($id_penggunaan)
     {
         $this->pelanggan->hapus_penggunaan($id_penggunaan);
