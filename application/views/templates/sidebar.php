@@ -2,9 +2,9 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <?php if($this->session->userdata('id_level')) : ?>
+    <?php if($this->session->userdata('id_user')) : ?>
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin') ?>">
-    <?php elseif ($this->session->userdata('id_tarif')) : ?>
+    <?php elseif ($this->session->userdata('id_pelanggan')) : ?>
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('pelanggan') ?>">
     <?php endif ?>
         <div class="sidebar-brand-icon">
@@ -14,7 +14,7 @@
     </a>
 
     <!-- Admin -->
-    <?php if($this->session->userdata('id_level')) : ?>
+    <?php if($this->session->userdata('id_user')) : ?>
         <div>
             <!-- Divider -->
             <hr class="sidebar-divider my-3">
@@ -36,26 +36,10 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Pelanggan</span></a>
             </li>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li> -->
         </div>
     
     <!-- Pelanggan -->
-    <?php elseif ($this->session->userdata('id_tarif')) : ?>
+    <?php elseif ($this->session->userdata('id_pelanggan')) : ?>
         <div>
             <!-- Divider -->
             <hr class="sidebar-divider my-3">

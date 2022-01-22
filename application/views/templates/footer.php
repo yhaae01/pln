@@ -30,12 +30,12 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Pilih logout untuk keluar dari aplikasi.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                    <?php if ($this->session->userdata('id_level')) : ?>
+                    <?php if ($this->session->userdata('id_user')) : ?>
                         <a class="btn btn-primary" href="<?= base_url('auth/logout_admin') ?>">Logout</a>
-                    <?php elseif ($this->session->userdata('id_tarif')) : ?>
+                    <?php elseif ($this->session->userdata('id_pelanggan')) : ?>
                         <a class="btn btn-primary" href="<?= base_url('auth/logout_pelanggan') ?>">Logout</a>
                     <?php endif; ?>
                 </div>
