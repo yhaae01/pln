@@ -11,7 +11,7 @@
                         <form action="<?= base_url('admin/tambah_pelanggan'); ?>" method="post">
                             <div class="form-group">
                                 <label for="">Username</label>
-                                <input type="username" name="username" class="form-control form-control-user" id="username"
+                                <input type="text" name="username" class="form-control form-control-user" id="username"
                                     value="<?= set_value('username') ?>">
                                     <?= form_error('username', '<small class="text-danger">', '</small>') ?>
                             </div>
