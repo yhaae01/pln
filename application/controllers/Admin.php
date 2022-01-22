@@ -11,7 +11,7 @@ class Admin extends CI_Controller
         $this->load->model('Admin_model', 'admin');
         $this->load->model('Pelanggan_model', 'pelanggan');
         
-        if (!$this->session->userdata('id_level')) {
+        if (!$this->session->userdata('id_user')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
                 Silahkan login terlebih dahulu!
             </div>');

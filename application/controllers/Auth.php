@@ -39,7 +39,7 @@ class Auth extends CI_Controller
                 if (password_verify($password, $user['password'])) {
                     $data = [
                         'username' => $user['username'],
-                        'id_level' => $user['id_level']
+                        'id_user' => $user['id_user']
                     ];
                     $this->session->set_userdata($data); // Menyimpan data di session
                     redirect('admin');
@@ -112,8 +112,8 @@ class Auth extends CI_Controller
                 // Cek password
                 if (password_verify($password, $user['password'])) {
                     $data = [
+                        'id_pelanggan' => $user['id_pelanggan'],
                         'username' => $user['username'],
-                        'id_tarif' => $user['id_tarif'],
                     ];
                     $this->session->set_userdata($data); // Menyimpan data di session
                     redirect('pelanggan');
@@ -175,7 +175,7 @@ class Auth extends CI_Controller
     public function logout_admin()
     {
         $this->session->unset_userdata('username');
-        $this->session->unset_userdata('id_level');
+        $this->session->unset_userdata('id_user');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             Berhasil logout.
@@ -186,7 +186,7 @@ class Auth extends CI_Controller
     public function logout_pelanggan()
     {
         $this->session->unset_userdata('username');
-        $this->session->unset_userdata('id_tarif');
+        $this->session->unset_userdata('id_pelanggan');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             Berhasil logout.
