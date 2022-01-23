@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2022 at 12:00 AM
+-- Generation Time: Jan 23, 2022 at 01:31 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -96,6 +96,15 @@ CREATE TABLE `penggunaan` (
   `meter_akhir` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `penggunaan`
+--
+
+INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`) VALUES
+(2, 2, '2021', 'Februari', 10, 65),
+(3, 1, '2022', 'Januari', 0, 53),
+(6, 1, '2022', 'Februari', 53, 71);
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +120,14 @@ CREATE TABLE `tagihan` (
   `jumlah_meter` int(11) NOT NULL,
   `status` enum('sudah','belum') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tagihan`
+--
+
+INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `jumlah_meter`, `status`) VALUES
+(1, 3, 1, 'Januari', '2022', 53, 'sudah'),
+(2, 6, 1, 'Februari', '2022', 18, 'belum');
 
 -- --------------------------------------------------------
 
@@ -217,13 +234,13 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
-  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tarif`
