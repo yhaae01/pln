@@ -44,6 +44,8 @@
                             <td>
                                 <?php if ($p['status'] === 'sudah') : ?>
                                     <span class="badge badge-primary">Sudah Bayar</span>
+                                <?php elseif ($p['status'] === 'proses') : ?>
+                                    <span class="badge badge-warning">Pembayaran Diproses</span>
                                 <?php elseif ($p['status'] === 'belum') : ?>
                                     <span class="badge badge-danger">Belum Bayar</span>
                                 <?php endif; ?>
