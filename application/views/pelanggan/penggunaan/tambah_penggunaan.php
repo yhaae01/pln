@@ -30,8 +30,8 @@
                                         <option selected='selected'>-- Pilih Tahun --</option>
                                         <?php
                                         $now = date('Y');
-                                        $until = date('Y') + 10;
-                                            for($i = $now; $i <= $until; $i++){
+                                        $sampai = date('Y') + 10; // Tahun sekarang + 10 Tahun
+                                            for($i = $now; $i <= $sampai; $i++){
                                                 echo "<option value='$i'> $i </option>";
                                             }
                                         ?>
@@ -39,13 +39,33 @@
                                     <?= form_error('tahun', '<small class="text-danger">', '</small>') ?>
                                 </div>
                             </div>
+                            
+                            <?php  
+                                $id_pelanggan = $this->session->userdata('id_pelanggan');
+                                // $bulan = date('M');
+                                $query = "SELECT `penggunaan`.`meter_akhir`, `pelanggan`.`id_pelanggan` 
+                                            FROM `penggunaan`
+                                            JOIN `pelanggan`
+                                           WHERE `penggunaan`.`id_pelanggan` = $id_pelanggan
+                                        ORDER BY `id_penggunaan` DESC LIMIT 1
+                                    ";
+
+                                $result = $this->db->query($query)->result_array();
+                            ?>
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="">Meter Awal</label>
-                                    <input type="text" name="meter_awal" class="form-control form-control-user" id="meter_awal"
-                                        value="<?= set_value('meter_awal') ?>">
-                                        <?= form_error('meter_awal', '<small class="text-danger">', '</small>') ?>
+                                    <?php foreach ($result as $r) : ?>
+                                        <?php if ($r['meter_akhir'] == 0) : ?>
+                                        <input type="text" name="meter_awal" class="form-control form-control-user" id="meter_awal"
+                                            value="<?= set_value('meter_awal') ?>">
+                                        <?php elseif ($r['meter_akhir'] != 0) : ?>
+                                            <input type="text" readonly name="meter_awal" class="form-control form-control-user" id="meter_awal"
+                                                value="<?= $r['meter_akhir'] ?>">
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                    <?= form_error('meter_awal', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="">Meter Akhir</label>
