@@ -51,9 +51,33 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?= base_url('pelanggan/bayar_tagihan/') . $p['id_tagihan'] ?>" class="badge badge-success">
-                                    <span class="fas fa-money-bill"></span> bayar
-                                </a>
+                                <?php if ($p['status'] === 'belum') : ?>
+                                    <a href="#" data-toggle="modal" data-target="#ModalBayar<?= $p['id_tagihan'] ?>" class="badge badge-success">
+                                        <span class="fas fa-money-bill"></span> bayar
+                                    </a>
+                                <?php endif ?>
+                                <!-- Modal Tagihan -->
+                                <div class="modal fade" id="ModalBayar<?= $p['id_tagihan'] ?>" tabindex="-1" role="dialog" aria-labelledby="ModalBayarLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ModalBayarLabel">Bayar Tagihan</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="<?= base_url('pelanggan/bayar_tagihan/') . $p['id_tagihan'] ?>" method="post">
+                                                <div class="modal-body">
+                                                    Yakin ingin bayar tagihan bulan <strong><?= $p['bulan']; ?></strong>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                                                    <button type="submit" class="btn btn-sm btn-primary">Bayar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <?php 
