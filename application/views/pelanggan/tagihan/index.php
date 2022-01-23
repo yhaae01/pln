@@ -12,13 +12,13 @@
                 </a> -->
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th scope="col">#</th>
                             <th scope="col">Bulan</th>
                             <th scope="col">Tahun</th>
                             <th scope="col">Total Meter</th>
                             <th scope="col">Status Pembayaran</th>
-                            <th scope="col" class="text-center">Aksi</th>
+                            <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <?php  
@@ -36,13 +36,19 @@
                         $no = 1;
                         foreach($result as $p) : 
                         ?>
-                        <tr>
+                        <tr class="text-center">
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $p['bulan']; ?></td>
                             <td><?= $p['tahun']; ?></td>
                             <td><?= $p['jumlah_meter']; ?></td>
-                            <td><?= $p['status']; ?></td>
-                            <td class="text-center">
+                            <td>
+                                <?php if ($p['status'] === 'sudah') : ?>
+                                    <span class="badge badge-primary">Sudah Bayar</span>
+                                <?php elseif ($p['status'] === 'belum') : ?>
+                                    <span class="badge badge-danger">Belum Bayar</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
                                 <a href="<?= base_url('pelanggan/bayar_tagihan/') . $p['id_tagihan'] ?>" class="badge badge-success">
                                     <span class="fas fa-money-bill"></span> bayar
                                 </a>
