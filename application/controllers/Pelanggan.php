@@ -118,6 +118,20 @@ class Pelanggan extends CI_Controller
         $this->pelanggan->hapus_penggunaan($id_penggunaan);
     }
 
+    public function tagihan()
+    {
+        $data['user'] = $this->db->get_where('pelanggan', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['title'] = 'Tagihan';
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('pelanggan/tagihan/index', $data);
+        $this->load->view('templates/footer');
+    }
+
 }
 
 /* End of file pelanggan.php */
