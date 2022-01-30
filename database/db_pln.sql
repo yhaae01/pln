@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2022 at 09:32 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Jan 30, 2022 at 01:31 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_listrik`
+-- Database: `db_pln`
 --
 
 DELIMITER $$
@@ -120,6 +120,14 @@ CREATE TABLE `penggunaan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `penggunaan`
+--
+
+INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`) VALUES
+(7, 1, '2022', 'Jan', 1, 123),
+(9, 2, '2022', 'Jan', 123, 150);
+
+--
 -- Triggers `penggunaan`
 --
 DELIMITER $$
@@ -155,7 +163,6 @@ END
 $$
 DELIMITER ;
 
-
 -- --------------------------------------------------------
 
 --
@@ -171,6 +178,14 @@ CREATE TABLE `tagihan` (
   `jumlah_meter` int(11) DEFAULT NULL,
   `status` enum('belum','proses','sudah') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tagihan`
+--
+
+INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `jumlah_meter`, `status`) VALUES
+(6, 7, 1, 'Jan', '2022', 122, 'belum'),
+(8, 9, 2, 'Jan', '2022', 27, 'belum');
 
 -- --------------------------------------------------------
 
@@ -215,7 +230,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama_admin`, `id_level`) VALUES
 (1, 'yhaae01', '$2y$10$uD.nPOYqNV91SoFjhvPsFekNEpHAELLSVhG3ToPXrJaBQ3BHunKeK', 'Surya Intan Permana', 1);
 
--- --------------------------------------------------------
+--
+-- Indexes for dumped tables
+--
 
 --
 -- Indexes for table `level`
@@ -293,13 +310,13 @@ ALTER TABLE `pembayaran`
 -- AUTO_INCREMENT for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
-  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tarif`
