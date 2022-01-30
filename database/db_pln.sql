@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2022 at 01:31 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Jan 25, 2022 at 09:32 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_pln`
+-- Database: `db_listrik`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cariDaya` (IN `watt` VARCHAR(50))  BEGIN
+SELECT * FROM v_penggunaan WHERE daya = watt;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectDaya` ()  BEGIN
+SELECT * FROM v_penggunaan WHERE daya = "900W";
+END$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `totalMeter` (`awal` INT(11), `akhir` INT(11)) RETURNS INT(11) BEGIN
+DECLARE total INT(11);
+SET total = akhir - awal;
+RETURN total;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -29,16 +52,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `level` (
   `id_level` int(11) NOT NULL,
-  `nama_level` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nama_level` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `level`
 --
 
 INSERT INTO `level` (`id_level`, `nama_level`) VALUES
-(1, 'admin'),
-(2, 'user');
+(1, 'Admin'),
+(2, 'User');
 
 -- --------------------------------------------------------
 
@@ -72,14 +95,14 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `username`, `password`, `nomor_kwh`, `n
 
 CREATE TABLE `pembayaran` (
   `id_pembayaran` int(11) NOT NULL,
-  `id_tagihan` int(11) NOT NULL,
-  `id_pelanggan` int(11) NOT NULL,
-  `tanggal_pembayaran` int(11) NOT NULL,
-  `bulan_bayar` varchar(15) NOT NULL,
-  `biayar_admin` int(11) NOT NULL,
-  `total_bayar` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_tagihan` int(11) DEFAULT NULL,
+  `id_pelanggan` int(11) DEFAULT NULL,
+  `tanggal_pembayaran` date DEFAULT NULL,
+  `bulan_bayar` varchar(15) DEFAULT NULL,
+  `biaya_admin` int(11) DEFAULT NULL,
+  `total_bayar` int(11) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -89,21 +112,49 @@ CREATE TABLE `pembayaran` (
 
 CREATE TABLE `penggunaan` (
   `id_penggunaan` int(11) NOT NULL,
-  `id_pelanggan` int(11) NOT NULL,
-  `tahun` varchar(4) NOT NULL,
-  `bulan` varchar(15) NOT NULL,
-  `meter_awal` int(11) NOT NULL,
-  `meter_akhir` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_pelanggan` int(11) DEFAULT NULL,
+  `tahun` varchar(4) DEFAULT NULL,
+  `bulan` varchar(15) DEFAULT NULL,
+  `meter_awal` int(11) DEFAULT NULL,
+  `meter_akhir` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `penggunaan`
+-- Triggers `penggunaan`
 --
+DELIMITER $$
+CREATE TRIGGER `trigger_insert_penggunaan` AFTER INSERT ON `penggunaan` FOR EACH ROW BEGIN 
+INSERT INTO tagihan (
+id_tagihan,
+id_penggunaan,
+id_pelanggan,
+bulan,
+tahun,
+jumlah_meter,
+status
+)
 
-INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`) VALUES
-(2, 2, '2021', 'Februari', 10, 65),
-(3, 1, '2022', 'Januari', 0, 53),
-(6, 1, '2022', 'Februari', 53, 71);
+VALUES (
+null,
+NEW.id_penggunaan,
+NEW.id_pelanggan,
+NEW.bulan,
+NEW.tahun,
+(SELECT totalMeter(meter_awal, meter_akhir) FROM penggunaan WHERE penggunaan.id_pelanggan = NEW.id_pelanggan),
+'belum'
+);
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_penggunaan` AFTER UPDATE ON `penggunaan` FOR EACH ROW BEGIN 
+
+UPDATE tagihan SET tagihan.jumlah_meter = (SELECT totalMeter(meter_awal, meter_akhir) FROM penggunaan WHERE penggunaan.id_pelanggan = NEW.id_pelanggan) WHERE tagihan.id_penggunaan = old.id_penggunaan;
+END
+$$
+DELIMITER ;
+
 
 -- --------------------------------------------------------
 
@@ -113,21 +164,13 @@ INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `tahun`, `bulan`, `me
 
 CREATE TABLE `tagihan` (
   `id_tagihan` int(11) NOT NULL,
-  `id_penggunaan` int(11) NOT NULL,
-  `id_pelanggan` int(11) NOT NULL,
-  `bulan` varchar(15) NOT NULL,
-  `tahun` varchar(4) NOT NULL,
-  `jumlah_meter` int(11) NOT NULL,
-  `status` enum('sudah','belum') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tagihan`
---
-
-INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `jumlah_meter`, `status`) VALUES
-(1, 3, 1, 'Januari', '2022', 53, 'sudah'),
-(2, 6, 1, 'Februari', '2022', 18, 'belum');
+  `id_penggunaan` int(11) DEFAULT NULL,
+  `id_pelanggan` int(11) DEFAULT NULL,
+  `bulan` varchar(20) DEFAULT NULL,
+  `tahun` varchar(4) DEFAULT NULL,
+  `jumlah_meter` int(11) DEFAULT NULL,
+  `status` enum('belum','proses','sudah') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -137,21 +180,19 @@ INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `
 
 CREATE TABLE `tarif` (
   `id_tarif` int(11) NOT NULL,
-  `daya` int(11) NOT NULL,
-  `tarifperkwh` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `daya` varchar(15) DEFAULT NULL,
+  `tarif_perkwh` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tarif`
 --
 
-INSERT INTO `tarif` (`id_tarif`, `daya`, `tarifperkwh`) VALUES
-(1, 450, 169),
-(2, 900, 1352),
-(3, 1300, 1444),
-(4, 2200, 1444),
-(5, 3500, 1444),
-(6, 6600, 1444);
+INSERT INTO `tarif` (`id_tarif`, `daya`, `tarif_perkwh`) VALUES
+(1, '400W', 169),
+(2, '900W', 1352),
+(3, '1300W', 1444),
+(4, '2200W', 1444);
 
 -- --------------------------------------------------------
 
@@ -161,22 +202,20 @@ INSERT INTO `tarif` (`id_tarif`, `daya`, `tarifperkwh`) VALUES
 
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nama_admin` varchar(100) NOT NULL,
-  `id_level` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `username` varchar(20) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `nama_admin` varchar(100) DEFAULT NULL,
+  `id_level` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama_admin`, `id_level`) VALUES
-(1, 'yhaae01', '$2y$10$uD.nPOYqNV91SoFjhvPsFekNEpHAELLSVhG3ToPXrJaBQ3BHunKeK', 'Surya intan Permana', 1);
+(1, 'yhaae01', '$2y$10$uD.nPOYqNV91SoFjhvPsFekNEpHAELLSVhG3ToPXrJaBQ3BHunKeK', 'Surya Intan Permana', 1);
 
---
--- Indexes for dumped tables
---
+-- --------------------------------------------------------
 
 --
 -- Indexes for table `level`
@@ -188,19 +227,32 @@ ALTER TABLE `level`
 -- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pelanggan`);
+  ADD PRIMARY KEY (`id_pelanggan`),
+  ADD KEY `idx_pelanggan` (`id_tarif`) USING BTREE;
+
+--
+-- Indexes for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD PRIMARY KEY (`id_pembayaran`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_tagihan` (`id_tagihan`);
 
 --
 -- Indexes for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
-  ADD PRIMARY KEY (`id_penggunaan`);
+  ADD PRIMARY KEY (`id_penggunaan`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`);
 
 --
 -- Indexes for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  ADD PRIMARY KEY (`id_tagihan`);
+  ADD PRIMARY KEY (`id_tagihan`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`),
+  ADD KEY `idx_tagihan` (`id_penggunaan`,`id_pelanggan`) USING BTREE;
 
 --
 -- Indexes for table `tarif`
@@ -212,7 +264,8 @@ ALTER TABLE `tarif`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id_user`),
+  ADD KEY `idx_user` (`id_level`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -228,19 +281,25 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
-  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tarif`
@@ -252,7 +311,44 @@ ALTER TABLE `tarif`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD CONSTRAINT `pelanggan_ibfk_1` FOREIGN KEY (`id_tarif`) REFERENCES `tarif` (`id_tarif`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `pembayaran_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pembayaran_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pembayaran_ibfk_4` FOREIGN KEY (`id_tagihan`) REFERENCES `tagihan` (`id_tagihan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `penggunaan`
+--
+ALTER TABLE `penggunaan`
+  ADD CONSTRAINT `penggunaan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  ADD CONSTRAINT `tagihan_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tagihan_ibfk_3` FOREIGN KEY (`id_penggunaan`) REFERENCES `penggunaan` (`id_penggunaan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

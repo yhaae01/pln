@@ -53,6 +53,41 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+
+            document.getElementById("meter_akhir").addEventListener(
+                "keydown",
+                debounce(e => {
+                    let awal = Number(document.getElementById("meter_awal").value);
+                    let akhir = Number(document.getElementById("meter_akhir").value);
+                    if (akhir <= 0) {
+                        document.getElementById("error_meter_akhir").innerHTML = "Tidak boleh kosong !";
+                        return;
+                    }
+                    if (awal > akhir) {
+                        document.getElementById("error_meter_akhir").innerHTML = "Tidak boleh lebih kecil dari Meter Awal !";
+                    } else {
+                        document.getElementById("error_meter_akhir").innerHTML = "";
+                    }
+                }, 1000)
+            );
+        });
+
+        const debounce = (fn, delay) => {
+            let timeoutID;
+            return function(...args) {
+                if (timeoutID) {
+                    clearTimeout(timeoutID);
+                }
+                timeoutID = setTimeout(() => {
+                    fn(...args);
+
+                }, delay)
+            }
+        }
+    </script>
+
 </body>
 
 </html>

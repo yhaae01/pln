@@ -62,6 +62,66 @@ class Admin_model extends CI_Model
         redirect('admin/pelanggan');
     }
 
+    public function getDataPenggunaan()
+    {
+        return $this->db->get('penggunaan')->result_array();
+    }
+
+    public function getPenggunaanById($id_penggunaan)
+    {
+        return $this->db->get_where('penggunaan', ['id_penggunaan' => $id_penggunaan])->row_array();
+    }
+
+    public function tambah_penggunaan()
+    {
+        $data = [
+            'id_pelanggan'  => $this->input->post('id_pelanggan', true),
+            'tahun'         => date('Y'),
+            'bulan'         => date('M'),
+            'meter_awal'    => $this->input->post('meter_awal', true),
+            'meter_akhir'   => $this->input->post('meter_akhir', true),
+        ];
+
+        $this->db->insert('penggunaan', $data);
+        
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Data penggunaan berhasil ditambahkan.
+        </div>');
+        redirect('admin/penggunaan');
+    }
+
+    public function ubah_penggunaan()
+    {
+        $id_penggunaan = $this->input->post('id_penggunaan', true);
+        $data = [
+            'meter_awal'    => $this->input->post('meter_awal', true),
+            'meter_akhir'   => $this->input->post('meter_akhir', true),
+        ];
+
+        $this->db->where('id_penggunaan', $id_penggunaan);
+        $this->db->update('penggunaan', $data);
+
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data penggunaan berhasil diubah.
+            </div>'
+        );
+        redirect('admin/penggunaan');
+    }
+
+    public function hapus_penggunaan($id_penggunaan)
+    {
+        $this->db->delete('penggunaan', ['id_penggunaan' => $id_penggunaan]);
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data penggunaan berhasil dihapus.
+            </div>'
+        );
+        redirect('admin/penggunaan');
+    }
+
 }
 
 /* End of file Admin_model.php */

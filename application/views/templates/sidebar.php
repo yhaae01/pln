@@ -36,6 +36,12 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Pelanggan</span></a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('admin/penggunaan') ?>">
+                    <i class="fas fa-fw fa-industry"></i>
+                    <span>Penggunaan</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin/tagihan') ?>">
@@ -60,11 +66,6 @@
                 <a class="nav-link" href="<?= base_url('pelanggan') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('pelanggan/penggunaan') ?>">
-                    <i class="fas fa-fw fa-industry"></i>
-                    <span>Penggunaan</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('pelanggan/tagihan') ?>">
