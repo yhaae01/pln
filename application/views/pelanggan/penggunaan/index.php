@@ -19,7 +19,6 @@
                             <th scope="col">Tahun</th>
                             <th scope="col">Meter Awal</th>
                             <th scope="col">Meter Akhir</th>
-                            <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <?php  
@@ -44,33 +43,7 @@
                             <td><?= $p['tahun']; ?></td>
                             <td><?= $p['meter_awal']; ?></td>
                             <td><?= $p['meter_akhir']; ?></td>
-                            <td class="text-center">
-                                <a href="<?= base_url('pelanggan/ubah_penggunaan/') . $p['id_penggunaan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
-                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_penggunaan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
-                            </td>
                         </tr>
-                        <!-- Modal Hapus -->
-                        <div class="modal fade" id="modalHapus<?= $p['id_penggunaan']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalHapusLabel">Hapus Pelanggan</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="<?= base_url('pelanggan/hapus_penggunaan/') . $p['id_penggunaan']; ?>" method="post">
-                                    <div class="modal-body">
-                                        Yakin ingin hapus penggunaan bulan <strong><?= $p['bulan']; ?></strong> ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
                         <?php 
                         endforeach 
                         ?>

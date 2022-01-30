@@ -22,8 +22,10 @@ class Pelanggan_model extends CI_Model
 
     public function tambah_penggunaan()
     {
+        $id_pelanggan = $this->session->userdata('id_pelanggan');
+
         $data = [
-            'id_pelanggan'  => $this->session->userdata('id_pelanggan'),
+            'id_pelanggan'  => $id_pelanggan,
             'tahun'         => $this->input->post('tahun'),
             'bulan'         => $this->input->post('bulan'),
             'meter_awal'    => $this->input->post('meter_awal'),

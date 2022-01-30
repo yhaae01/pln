@@ -8,7 +8,8 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <form action="<?= base_url('pelanggan/tambah_penggunaan'); ?>" method="post">                            
+                        <form action="<?= base_url('pelanggan/tambah_penggunaan'); ?>" method="post">
+                        <input type="hidden" name="id_penggunaan">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="">Bulan</label>
@@ -56,15 +57,21 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="">Meter Awal</label>
-                                    <?php foreach ($result as $r) : ?>
-                                        <?php if ($r['meter_akhir'] != 0) : ?>
-                                            <input type="text" readonly name="meter_awal" class="form-control form-control-user" id="meter_awal"
-                                            value="<?= $r['meter_akhir'] ?>">
-                                        <?php elseif ($r['meter_akhir'] === null) : ?>
-                                            <?php endif ?>
-                                            <?php endforeach ?>
-                                            <input type="text" name="meter_awal" class="form-control form-control-user" id="meter_awal"
+                                    <?php if(empty($result)) : ?>
+                                        <input type="text" name="meter_awal" class="form-control form-control-user" id="meter_awal" value="<?= set_value('meter_awal'); ?>">
+                                    <?php else : ?>
+                                        <?php foreach ($result as $r) : ?>
+                                            <!-- jika belum ada isinya, tampilkan input type meter awal -->
+                                            <?php if (!empty($r['meter_akhir'])) : ?>
+                                                <input type="text" readonly name="meter_awal" class="form-control form-control-user" id="meter_awal"
+                                                value="<?= $r['meter_akhir'] ?>">
+                                            <?php else : ?>
+                                                <input type="text" name="meter_awal" class="form-control form-control-user" id="meter_awal"
                                                 value="<?= set_value('meter_awal') ?>">
+                                            <?php endif ?>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
+                                        
                                     <?= form_error('meter_awal', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="col-sm-6 mb-3 mb-sm-0">

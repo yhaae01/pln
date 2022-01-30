@@ -60,11 +60,11 @@ class Pelanggan extends CI_Controller
             'required'   => 'Tahun harus diisi!'
         ]);
         $this->form_validation->set_rules('meter_awal', 'meter_awal', 'required|trim|numeric',[
-            'required'   => 'Nama Lengkap harus diisi!',
+            'required'   => 'Meter Awal harus diisi!',
             'numeric'    => 'Meter Awal harus angka!'
         ]);
         $this->form_validation->set_rules('meter_akhir', 'meter_akhir', 'required|trim|numeric',[
-            'required'   => 'Nama Lengkap harus diisi!',
+            'required'   => 'Meter Akhir harus diisi!',
             'numeric'    => 'Meter Akhir harus angka!'
         ]);
 

@@ -149,6 +149,41 @@ class Admin extends CI_Controller
         $this->admin->hapus_pelanggan($id_pelanggan);
     }
 
+    public function tagihan()
+    {
+        $data['title'] = 'Data Tagihan';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/tagihan/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_tagihan()
+    {
+        $data['title'] = 'Tambah Tagihan';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+
+        $this->form_validation->set_rules('status', 'Status', 'required|trim',[
+            'required'   => 'Status harus diisi!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/tagihan/tambah_tagihan');
+            $this->load->view('templates/footer');
+        } else {
+            $this->admin->tambah_tagihan();
+        }
+    }
 }
 
 /* End of file Admin.php */
