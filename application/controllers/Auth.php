@@ -10,6 +10,7 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Auth_model', 'auth');
+        $this->load->model('Tarif_model', 'tarif');
     }
     
     public function login_admin()
@@ -134,6 +135,9 @@ class Auth extends CI_Controller
 
     public function register_pelanggan()
     {
+        $data['title'] = 'Registrasi Pelanggan';
+        $data['tarif'] = $this->tarif->getAllData();
+
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required|trim',[
             'required'   => 'Nama Lengkap harus diisi!'
         ]);
@@ -154,16 +158,19 @@ class Auth extends CI_Controller
             'required'   => 'Nomor KWH harus diisi!',
             'max_length' => 'Maksimal 11 karakter!'
         ]);
+        $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|trim|numeric|is_unique[pelanggan.nomor_kwh]',[
+            'required'   => 'Nomor KWH harus diisi!',
+            'numeric'    => 'Hanya bisa menggunakan angka!',
+            'is_unique'  => 'Nomor KWH sudah terdaftar!'
+        ]);
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
             'required'   => 'Alamat harus diisi!'
         ]);
-        $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required|trim',[
-            'required'   => 'ID Tarif harus diisi!'
+        $this->form_validation->set_rules('id_tarif', 'Daya', 'required|trim',[
+            'required'   => 'Daya harus diisi!'
         ]);
 
         if ($this->form_validation->run() == FALSE) {
-            $data['title'] = 'Registrasi Pelanggan';
-
             $this->load->view('templates/auth_header', $data);
             $this->load->view('auth/pelanggan/register_pelanggan');
             $this->load->view('templates/auth_footer');

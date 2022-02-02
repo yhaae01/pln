@@ -5,7 +5,7 @@
 
         <div class="col-xl-6">
 
-            <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card o-hidden border-0 shadow-lg" style="margin-top: 140px;">
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
@@ -17,17 +17,17 @@
                                 <?= $this->session->flashdata('message'); ?>
                                 <form class="user" method="post" action="<?= base_url('auth/login_admin') ?>">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
+                                        <input type="text" class="form-control"
                                             id="username" name="username" aria-describedby="username"
                                             placeholder="Username" value="<?= set_value('username') ?>">
-                                            <?= form_error('username', '<small class="text-danger pl-3">', '</small>') ?>
+                                            <?= form_error('username', '<small class="text-danger">', '</small>') ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user"
+                                        <input type="password" class="form-control"
                                             id="password" name="password" placeholder="Password">
-                                            <?= form_error('password', '<small class="text-danger pl-3">', '</small>') ?>
+                                            <?= form_error('password', '<small class="text-danger">', '</small>') ?>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-primary btn-block">
                                         Login
                                     </button>
                                 </form>
