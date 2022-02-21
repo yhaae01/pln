@@ -81,8 +81,8 @@ class Admin_model extends CI_Model
     {
         $data = [
             'id_pelanggan'  => $this->input->post('id_pelanggan', true),
-            'tahun'         => date('Y'),
             'bulan'         => date('m'),
+            'tahun'         => date('Y'),
             'meter_awal'    => $this->input->post('meter_awal', true),
             'meter_akhir'   => $this->input->post('meter_akhir', true),
         ];
@@ -127,6 +127,38 @@ class Admin_model extends CI_Model
         redirect('admin/penggunaan');
     }
 
+    public function getDataPelById($id)
+    {
+        //Join tabel pelanggan dan tarif where = id
+        $queryDataPel = "SELECT *
+                           FROM `pelanggan` JOIN `tarif`
+                             ON `pelanggan`.`id_tarif` = `tarif`.`id_tarif`
+                          WHERE `pelanggan`.`id_pelanggan` = $id";
+        //Tampilkan data dari hasil join pelanggan dengan tarif berdasarkan id
+        return $this->db->query($queryDataPel)->row_array();
+    }
+
+    public function getAllPenggunaan()
+    {
+        $data = "SELECT `penggunaan`.*,`pelanggan`.`nomor_kwh`, `pelanggan`.`nama_pelanggan`, `tarif`.`daya` 
+                   FROM `penggunaan` 
+                   JOIN `pelanggan` ON `penggunaan`.`id_pelanggan` = `pelanggan`.`id_pelanggan`
+                   JOIN `tarif` ON `pelanggan`.`id_tarif` = `tarif`.`id_tarif`";
+        return $this->db->query($data)->result_array();
+    }
+
+    public function getAllTagihan()
+    {
+        $queryTagihan = "SELECT `tagihan`.*, 
+                                `pelanggan`.`nomor_kwh`, 
+                                `pelanggan`.`nama_pelanggan`, 
+                                `penggunaan`.`meter_awal`, 
+                                `penggunaan`.`meter_akhir` 
+                           FROM `tagihan` 
+                           JOIN `penggunaan` ON `tagihan`.`id_penggunaan` = `penggunaan`.`id_penggunaan`
+                           JOIN `pelanggan` ON `penggunaan`.`id_pelanggan` = `pelanggan`.`id_pelanggan`";
+        return $this->db->query($queryTagihan)->result_array();
+    }
 }
 
 /* End of file Admin_model.php */

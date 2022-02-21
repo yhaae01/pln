@@ -39,7 +39,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', [
             'username' => $this->session->userdata('username')
         ])->row_array();
-        $data['pelanggan'] = $this->pelanggan->getData();
+        $data['pelanggan'] = $this->pelanggan->getAllDataPelanggan();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -135,7 +135,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', [
             'username' => $this->session->userdata('username')
         ])->row_array();
-        $data['pelanggan'] = $this->pelanggan->getUserById($id_pelanggan);
+        $data['pelanggan'] = $this->admin->getDataPelById($id_pelanggan);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -155,6 +155,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', [
             'username' => $this->session->userdata('username')
         ])->row_array();
+        $data['tagihan'] = $this->admin->getAllTagihan();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -169,7 +170,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', [
             'username' => $this->session->userdata('username')
         ])->row_array();
-        $data['penggunaan'] = $this->admin->getDataPenggunaan();
+        $data['penggunaan'] = $this->admin->getAllPenggunaan();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -184,7 +185,8 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', [
             'username' => $this->session->userdata('username')
         ])->row_array();
-        $data['pelanggan'] = $this->pelanggan->getData();
+        $data['pelanggan'] = $this->pelanggan->getAllDataPelanggan();
+        $data['penggunaan'] = $this->admin->getAllPenggunaan();
 
         $this->form_validation->set_rules('id_pelanggan', 'Pelanggan', 'required|trim|is_unique[penggunaan.id_pelanggan]',[
             'required'   => 'Pelanggan harus diisi!',
@@ -194,9 +196,10 @@ class Admin extends CI_Controller
             'required'   => 'Meter Awal harus diisi!',
             'numeric'    => 'Meter Awal harus angka!'
         ]);
-        $this->form_validation->set_rules('meter_akhir', 'meter_akhir', 'required|trim|numeric',[
-            'required'   => 'Meter Akhir harus diisi!',
-            'numeric'    => 'Meter Akhir harus angka!'
+        $this->form_validation->set_rules('meter_akhir', 'meter_akhir', 'required|trim|numeric|greater_than[' . $this->input->post('meter_awal') . ']',[
+            'required'     => 'Meter Akhir harus diisi!',
+            'greater_than' => 'Tidak boleh lebih kecil dari Meter Awal!',
+            'numeric'      => 'Meter Akhir harus angka!'
         ]);
 
         if ($this->form_validation->run() == FALSE) {

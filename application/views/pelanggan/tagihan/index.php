@@ -4,17 +4,20 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-        <div class="col-lg-8">
-            <div class="card">
-                <?php if (!empty($tagihan['id_tagihan'])) : ?>
-                    <table class="table table-hover">
+        <div class="row">
+            <div class="col-lg-6">
+            <?= $this->session->flashdata('message'); ?>
+
+                <div class="card">
+                    <?php if (!empty($tagihan['id_tagihan'])) : ?>
+                    <table class="table mb-3">
                         <tr>
                             <td>Nomor KWH</td>
                             <td><?= $tagihan['nomor_kwh']; ?></td>
                         </tr>
                         <tr>
                             <td>Bulan</td>
-                            <td><?= $tagihan['bulan']; ?></td>
+                            <td><?= date('F'); ?></td>
                         </tr>
                         <tr>
                             <td>Tahun</td>
@@ -27,27 +30,27 @@
                         <tr>
                             <td>Status Pembayaran</td>
                             <td>
-                                <?php if ($tagihan['status'] === 'sudah') : ?>
-                                    <span class="badge badge-primary">Sudah Bayar</span>
-                                <?php elseif ($tagihan['status'] === 'belum') : ?>
+                                <?php if ($tagihan['status'] === 'Dibayar') : ?>
+                                    <span class="badge badge-primary">Sudah Dibayar</span>
+                                <?php elseif ($tagihan['status'] === 'Belum Dibayar') : ?>
                                     <span class="badge badge-danger">Belum Bayar</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>
-                                <?php if ($tagihan['status'] === 'belum') : ?>
-                                    <a href="<?= base_url('pelanggan/pembayaran') ?>" class="badge badge-success">
-                                        <span class="fas fa-money-bill"></span> bayar
+                            <td colspan="2">
+                                <?php if ($tagihan['status'] === 'Belum Dibayar') : ?>
+                                    <a href="<?= base_url('pelanggan/pembayaran') ?>" class="btn btn-primary btn-block">
+                                        Bayar Tagihan
                                     </a>
                                 <?php endif ?>
+                                <?php else : ?>
+                                    <h4 class="my-3 mx-4">Tagihan kosong!</h4>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     </table>
-                <?php else : ?>
-                    <h4>Tagihan kosong!</h4>
-                <?php endif; ?>
+                </div>
             </div>
         </div>
 

@@ -23,31 +23,22 @@
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
-                    <?php  
-                        $query = "SELECT `pelanggan`.`id_pelanggan`, `penggunaan`.`id_pelanggan`, `penggunaan`.`id_penggunaan`, `nama_pelanggan`, `nomor_kwh`, `tahun`, `bulan`, `meter_awal`, `meter_akhir`
-                                    FROM `pelanggan`
-                                    JOIN `penggunaan` 
-                                      ON `pelanggan`.`id_pelanggan` = `penggunaan`.`id_pelanggan`
-                                   ";
-
-                        $result = $this->db->query($query)->result_array();
-                    ?>
                     <tbody>
                         <?php 
                         $no = 1;
-                        foreach($result as $p) : 
+                        foreach($penggunaan as $p) : 
                         ?>
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
                             <td><?= $p['nomor_kwh']; ?></td>
                             <td><?= $p['nama_pelanggan']; ?></td>
-                            <td><?= $p['bulan']; ?></td>
+                            <td><?= $p['bulan'] = date('F'); ?></td>
                             <td><?= $p['tahun']; ?></td>
                             <td><?= $p['meter_awal']; ?></td>
                             <td><?= $p['meter_akhir']; ?></td>
                             <td>
                                 <a href="<?= base_url('admin/ubah_penggunaan/') . $p['id_penggunaan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
-                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_penggunaan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
+                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_penggunaan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> hapus</a>
                             </td>
                         </tr>
                             <!-- Modal Hapus -->

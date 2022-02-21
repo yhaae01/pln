@@ -19,42 +19,30 @@
                             <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <?php  
-                        $query = "SELECT *
-                                    FROM tagihan
-                                    JOIN penggunaan ON (tagihan.id_penggunaan = penggunaan.id_penggunaan)
-                                    JOIN pelanggan ON (penggunaan.id_pelanggan = pelanggan.id_pelanggan)
-                                    ";
-
-                        $result = $this->db->query($query)->result_array();
-                    ?>
                     <tbody>
                         <?php 
                         $no = 1;
-                        foreach($result as $p) : 
+                        foreach($tagihan as $t) : 
                         ?>
                         <tr>
                             <th scope="row"><?= $no++; ?></th>
-                            <td><?= $p['nomor_kwh']; ?></td>
-                            <td><?= $p['bulan']; ?></td>
-                            <td><?= $p['tahun']; ?></td>
-                            <td><?= $p['jumlah_meter']; ?></td>
+                            <td><?= $t['nomor_kwh']; ?></td>
+                            <td><?= $t['bulan'] = date('F'); ?></td>
+                            <td><?= $t['tahun']; ?></td>
+                            <td><?= $t['jumlah_meter']; ?></td>
                             <td>
-                                <?php if ($p['status'] === 'sudah') : ?>
-                                    <span class="badge badge-primary">Sudah Bayar</span>
-                                <?php elseif ($p['status'] === 'proses') : ?>
-                                    <span class="badge badge-warning">Pembayaran Diproses</span>
-                                <?php elseif ($p['status'] === 'belum') : ?>
-                                    <span class="badge badge-danger">Belum Bayar</span>
+                                <?php if ($t['status'] === 'Dibayar') : ?>
+                                    <span class="badge badge-primary">Sudah Dibayar</span>
+                                <?php elseif ($t['status'] === 'Belum Dibayar') : ?>
+                                    <span class="badge badge-danger">Belum Dibayar</span>
                                 <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/ubah_tagihan/') . $p['id_tagihan'] ?>" class="badge badge-warning"><span class="fas fa-edit"></span> ubah</a>
-                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $p['id_tagihan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> delete</a>
+                                <a href="#" data-toggle="modal" data-target="#modalHapus<?= $t['id_tagihan']; ?>" class="badge badge-danger"><span class="fas fa-trash"></span> hapus</a>
                             </td>
                         </tr>
                         <!-- Modal Hapus -->
-                        <div class="modal fade" id="modalHapus<?= $p['id_tagihan']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalHapus<?= $t['id_tagihan']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
@@ -63,9 +51,9 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="<?= base_url('admin/hapus_tagihan/') . $p['id_tagihan']; ?>" method="post">
+                                <form action="<?= base_url('admin/hapus_tagihan/') . $t['id_tagihan']; ?>" method="post">
                                     <div class="modal-body">
-                                        Yakin ingin hapus tagihan <strong><?= $p['nomor_kwh']; ?></strong> ?
+                                        Yakin ingin hapus tagihan <strong><?= $t['nomor_kwh']; ?></strong> ?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>

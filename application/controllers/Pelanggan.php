@@ -71,7 +71,7 @@ class Pelanggan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $this->pelanggan->pembayaran();
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
                 Berhasil bayar tagihan!
             </div>');
             redirect('pelanggan/tagihan');

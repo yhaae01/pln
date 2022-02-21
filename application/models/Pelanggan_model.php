@@ -5,9 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pelanggan_model extends CI_Model 
 {
 
-    public function getData()
+    public function getAllDataPelanggan()
     {
-        return $this->db->get('pelanggan')->result_array();
+        $data = "SELECT *
+                     FROM `pelanggan` JOIN `tarif`
+                       ON `pelanggan`.`id_tarif` = `tarif`.`id_tarif`";
+        return $this->db->query($data)->result_array();
     }
 
     public function getUserById($id_pelanggan)
@@ -35,13 +38,13 @@ class Pelanggan_model extends CI_Model
     public function pembayaran()
     {
         $data = [
-            'id_tagihan'            => $this->input->post('id_tagihan', true),
-            'id_pelanggan'          => $this->input->post('id_pelanggan', true),
-            'tanggal_pembayaran'    => time(),
-            'bulan_bayar'           => time(),
-            'biaya_admin'           => $this->input->post('biaya_admin', true),
-            'total_bayar'           => $this->input->post('total_bayar', true),
-            'id_user'               => $this->input->post('id_user', true),
+            'id_tagihan'    => $this->input->post('id_tagihan', true),
+            'id_pelanggan'  => $this->input->post('id_pelanggan', true),
+            'tgl_bayar'     => time(),
+            'bulan'         => time(),
+            'biaya_admin'   => $this->input->post('biaya_admin', true),
+            'total_bayar'   => $this->input->post('total_bayar', true),
+            'id_user'       => $this->input->post('id_user', true),
         ];
         $this->db->insert('pembayaran', $data);
     }

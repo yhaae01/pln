@@ -27,9 +27,9 @@
                                     <td><?= $pelanggan['nomor_kwh'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>ID Tarif</td>
+                                    <td>Daya</td>
                                     <td>:</td>
-                                    <td><?= $pelanggan['id_tarif'] ?></td>
+                                    <td><?= $pelanggan['daya'] ?></td>
                                 </tr>
                                 <tr>
                                     <td>Alamat</td>
