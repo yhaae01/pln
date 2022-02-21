@@ -21,9 +21,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php if ($this->session->userdata('id_level')) : ?>
+                                <?php if ($this->session->userdata('id_user')) : ?>
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= ucwords($user['nama_admin']); ?></span>
-                                <?php elseif ($this->session->userdata('id_tarif')) : ?>
+                                <?php elseif ($this->session->userdata('id_pelanggan')) : ?>
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= ucwords($user['nama_pelanggan']); ?></span>
                                 <?php endif; ?>
                                 <img class="img-profile rounded-circle"

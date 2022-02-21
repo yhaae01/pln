@@ -4,6 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin_model extends CI_Model 
 {
+    public function getAllUser()
+    {
+        return $this->db->get('user')->row_array();
+    }
+    
     public function getTarif()
     {
         return $this->db->get('tarif')->result_array();
@@ -77,7 +82,7 @@ class Admin_model extends CI_Model
         $data = [
             'id_pelanggan'  => $this->input->post('id_pelanggan', true),
             'tahun'         => date('Y'),
-            'bulan'         => date('M'),
+            'bulan'         => date('m'),
             'meter_awal'    => $this->input->post('meter_awal', true),
             'meter_akhir'   => $this->input->post('meter_akhir', true),
         ];
