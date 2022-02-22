@@ -192,11 +192,11 @@ class Admin extends CI_Controller
             'required'   => 'Pelanggan harus diisi!',
             'is_unique'  => 'Pelanggan sudah ditambahkan!'
         ]);
-        $this->form_validation->set_rules('meter_awal', 'meter_awal', 'required|trim|numeric',[
+        $this->form_validation->set_rules('meter_awal', 'Meter Awal', 'required|trim|numeric',[
             'required'   => 'Meter Awal harus diisi!',
             'numeric'    => 'Meter Awal harus angka!'
         ]);
-        $this->form_validation->set_rules('meter_akhir', 'meter_akhir', 'required|trim|numeric|greater_than[' . $this->input->post('meter_awal') . ']',[
+        $this->form_validation->set_rules('meter_akhir', 'Meter Akhir', 'required|trim|numeric|greater_than[' . $this->input->post('meter_awal') . ']',[
             'required'     => 'Meter Akhir harus diisi!',
             'greater_than' => 'Tidak boleh lebih kecil dari Meter Awal!',
             'numeric'      => 'Meter Akhir harus angka!'
@@ -244,6 +244,80 @@ class Admin extends CI_Controller
     public function hapus_penggunaan($id_penggunaan)
     {
         $this->admin->hapus_penggunaan($id_penggunaan);
+    }
+
+    public function tarif()
+    {
+        $data['title'] = 'Tarif';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['tarif'] = $this->admin->getAllTarif();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/tarif/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_tarif()
+    {
+        $data['title'] = 'Tambah Tarif';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+
+        $this->form_validation->set_rules('daya', 'Daya', 'required|trim',[
+            'required'   => 'Daya harus diisi!',
+        ]);
+        $this->form_validation->set_rules('tarif', 'Tarif', 'required|trim|numeric',[
+            'required'   => 'Tarif harus diisi!',
+            'numeric'    => 'Tarif harus angka!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/tarif/tambah_tarif', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->admin->tambah_tarif();
+        }
+    }
+
+    public function ubah_tarif($id_tarif)
+    {
+        $data['title'] = 'Ubah Tarif';
+        $data['user'] = $this->db->get_where('user', [
+            'username' => $this->session->userdata('username')
+        ])->row_array();
+        $data['tarif'] = $this->admin->getTarifById($id_tarif);
+
+        $this->form_validation->set_rules('daya', 'Daya', 'required|trim',[
+            'required'   => 'Daya harus diisi!',
+        ]);
+
+        $this->form_validation->set_rules('tarif', 'Tarif', 'required|trim|numeric',[
+            'required'   => 'Tarif harus diisi!',
+            'numeric'    => 'Tarif harus angka!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/tarif/ubah_tarif', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->admin->ubah_tarif();
+        }
+    }
+
+    public function hapus_tarif($id_tarif)
+    {
+        $this->admin->hapus_tarif($id_tarif);
     }
 }
 

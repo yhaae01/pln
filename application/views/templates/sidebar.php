@@ -36,6 +36,12 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Pelanggan</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('admin/tarif') ?>">
+                    <i class="fas fa-fw fa-money-bill-alt"></i>
+                    <span>Tarif</span></a>
+            </li>
             
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin/penggunaan') ?>">

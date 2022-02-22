@@ -9,9 +9,61 @@ class Admin_model extends CI_Model
         return $this->db->get('user')->row_array();
     }
     
-    public function getTarif()
+    public function getAllTarif()
     {
         return $this->db->get('tarif')->result_array();
+    }
+
+    public function getTarifById($id_tarif)
+    {
+        return $this->db->get_where('tarif', ['id_tarif' => $id_tarif])->row_array();
+    }
+
+    public function tambah_tarif()
+    {
+        $data = [
+            'daya'          => htmlspecialchars($this->input->post('daya', true)),
+            'tarif_perkwh'  => htmlspecialchars($this->input->post('tarif_perkwh', true)),
+        ];
+
+        $this->db->insert('tarif', $data);
+        
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Data tarif berhasil ditambahkan.
+        </div>');
+        redirect('admin/tarif');
+    }
+
+    public function ubah_tarif()
+    {
+        $id_tarif = $this->input->post('id_tarif', true);
+        $data = [
+            'daya'          => $this->input->post('daya', true),
+            'tarif_perkwh'  => $this->input->post('tarif_perkwh', true),
+        ];
+
+        $this->db->where('id_tarif', $id_tarif);
+        $this->db->update('tarif', $data);
+
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data Tarif berhasil diubah.
+            </div>'
+        );
+        redirect('admin/tarif');
+    }
+
+    public function hapus_tarif($id_tarif)
+    {
+        $this->db->delete('tarif', ['id_tarif' => $id_tarif]);
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data tarif berhasil dihapus.
+            </div>'
+        );
+        redirect('admin/tarif');
     }
 
     public function tambah_pelanggan()
