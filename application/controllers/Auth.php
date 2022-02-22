@@ -10,7 +10,7 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Auth_model', 'auth');
-        $this->load->model('Tarif_model', 'tarif');
+        $this->load->model('Admin_model', 'admin');
     }
     
     public function login_admin()
@@ -136,7 +136,7 @@ class Auth extends CI_Controller
     public function register_pelanggan()
     {
         $data['title'] = 'Registrasi Pelanggan';
-        $data['tarif'] = $this->tarif->getAllData();
+        $data['tarif'] = $this->admin->getAllTarif();
 
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required|trim',[
             'required'   => 'Nama Lengkap harus diisi!'
