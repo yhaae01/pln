@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2022 at 04:49 PM
+-- Generation Time: Feb 23, 2022 at 04:38 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -106,7 +106,6 @@ CREATE TABLE `pembayaran` (
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_tagihan`, `id_pelanggan`, `tgl_bayar`, `bulan`, `biaya_admin`, `total_bayar`, `id_user`) VALUES
-(4, 4, 1, 1645457625, 1645457625, 3000, 53000, 2),
 (5, 5, 3, 1645458502, 1645458502, 3000, 52000, 2);
 
 --
@@ -141,7 +140,8 @@ CREATE TABLE `penggunaan` (
 
 INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `meter_awal`, `meter_akhir`) VALUES
 (3, 1, 2, 2022, 0, 100),
-(4, 3, 2, 2022, 0, 70);
+(4, 3, 2, 2022, 0, 70),
+(5, 4, 2, 2022, 0, 50);
 
 --
 -- Triggers `penggunaan`
@@ -201,7 +201,8 @@ CREATE TABLE `tagihan` (
 
 INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `jumlah_meter`, `status`) VALUES
 (4, 3, 1, '2', 2022, 100, 'Dibayar'),
-(5, 4, 3, '2', 2022, 70, 'Dibayar');
+(5, 4, 3, '2', 2022, 70, 'Belum Dibayar'),
+(6, 5, 4, '2', 2022, 50, 'Belum Dibayar');
 
 -- --------------------------------------------------------
 
@@ -378,19 +379,19 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
-  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tarif`
