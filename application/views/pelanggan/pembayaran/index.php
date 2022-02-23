@@ -43,27 +43,10 @@
                                     <td><?= $tagihan['jumlah_meter'] * $tagihan['tarif_perkwh'] + 3000; ?></td>
                                 </tr>
                             </table>
-                            
-                            <!-- From Pembayaran -->
-                            <form action="" method="post">
-                                <input type="hidden" class="form-control" id="id_tagihan" name="id_tagihan" value="<?= $tagihan['id_tagihan'] ?>">
-                                <input type="hidden" class="form-control" id="nama_pelanggan" name="nama_pelanggan" value="<?= $user['nama_pelanggan']; ?>" readonly>
-                                <input type="hidden" class="form-control" id="id_pelanggan" name="id_pelanggan" value="<?= $user['id_pelanggan']; ?>">
-                                <input type="hidden" class="form-control" id="jumlah_meter" name="jumlah_meter" value="<?= $tagihan['jumlah_meter']; ?>" readonly>
-                                <input type="hidden" class="form-control" id="tgl_bayar" name="tgl_bayar" value="<?= date('d-F-Y'); ?>" readonly>
-                                <input type="hidden" class="form-control" id="nama_admin" name="nama_admin" value="<?= $admin['nama_admin']; ?>" readonly>
-                                <input type="hidden" class="form-control" id="id_user" name="id_user" value="<?= $admin['id_user']; ?>">
-                                <input type="hidden" class="form-control" id="biaya_admin" name="biaya_admin" value="3000" readonly>
-                                <input type="hidden" class="form-control" id="" name="" value="<?= $tagihan['jumlah_meter'] * $tagihan['tarif_perkwh']?>" readonly>
-                                <input type="hidden" class="form-control" id="total_bayar" name="total_bayar" value="<?= $tagihan['jumlah_meter'] * $tagihan['tarif_perkwh'] + 3000; ?>" readonly>
-                                <input type="hidden" class="form-control" id="nominal" name="nominal" value="<?= $tagihan['jumlah_meter'] * $tagihan['tarif_perkwh'] + 3000; ?>">
-
-                                <button type="button" class="btn btn-primary btn-sm mb-3 btn-block" data-toggle="modal" data-target="#exampleModal">
-                                    Bayar
-                                </button>
-
-                            </form>
-                            <!-- End Form -->
+                        
+                            <button type="button" class="btn btn-primary btn-sm mb-3 btn-block" data-toggle="modal" data-target="#exampleModal">
+                                Bayar
+                            </button>
                         </div>
 
                     <?php else : ?>
