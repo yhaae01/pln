@@ -57,11 +57,7 @@ class Pelanggan extends CI_Controller
         $data['admin']   = $this->admin->getAllUser('id_user' == 1);
         $data['title']   = 'Pembayaran';
 
-        $this->form_validation->set_rules('nominal', 'Nominal', 'required|numeric|greater_than[' . $this->input->post('total_bayar') . ']',[
-            'required'      => 'Nominal harus diisi',
-            'greater_than'  => 'Maaf nominal bayar kurang!',
-            'numeric'       => 'Hanya bisa menggunakan angka!'
-        ]);
+        $this->form_validation->set_rules('nominal', 'Nominal', 'trim');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
