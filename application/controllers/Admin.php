@@ -164,6 +164,11 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function hapus_tagihan($id_tagihan)
+    {
+        $this->admin->hapus_tagihan($id_tagihan);
+    }
+
     public function penggunaan()
     {
         $data['title'] = 'Penggunaan';

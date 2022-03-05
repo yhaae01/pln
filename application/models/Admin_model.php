@@ -66,6 +66,18 @@ class Admin_model extends CI_Model
         redirect('admin/tarif');
     }
 
+    public function hapus_tagihan($id_tagihan)
+    {
+        $this->db->delete('tagihan', ['id_tagihan' => $id_tagihan]);
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Data tagihan berhasil dihapus.
+            </div>'
+        );
+        redirect('admin/tagihan');
+    }
+
     public function tambah_pelanggan()
     {
         $data = [
