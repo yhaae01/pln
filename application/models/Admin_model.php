@@ -29,7 +29,7 @@ class Admin_model extends CI_Model
         $this->db->insert('tarif', $data);
         
         $this->session->set_flashdata(
-            'tambah_tarif', 
+            'message', 
             '<div class="alert alert-success" role="alert">
             Data tarif berhasil ditambahkan.
             </div>'
@@ -49,7 +49,7 @@ class Admin_model extends CI_Model
         $this->db->update('tarif', $data);
 
         $this->session->set_flashdata(
-            'ubah_tarif',
+            'message',
             '<div class="alert alert-success" role="alert">
             Data Tarif berhasil diubah.
             </div>'
@@ -61,7 +61,7 @@ class Admin_model extends CI_Model
     {
         $this->db->delete('tarif', ['id_tarif' => $id_tarif]);
         $this->session->set_flashdata(
-            'hapus_tarif',
+            'message',
             '<div class="alert alert-success" role="alert">
             Data tarif berhasil dihapus.
             </div>'

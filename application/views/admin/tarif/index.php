@@ -6,6 +6,7 @@
 
         <div class="row">
             <div class="col-lg-6">
+                <?= $this->session->flashdata('message'); ?>
                 <a href="<?= base_url('admin/tambah_tarif') ?>" class="btn btn-sm btn-primary mb-3">
                     <span class="fas fa-plus-circle"></span> Tambah Tarif
                 </a>

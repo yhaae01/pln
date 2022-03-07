@@ -276,7 +276,7 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('daya', 'Daya', 'required|trim',[
             'required'   => 'Daya harus diisi!',
         ]);
-        $this->form_validation->set_rules('tarif', 'Tarif', 'required|trim|numeric',[
+        $this->form_validation->set_rules('tarif_perkwh', 'Tarif', 'required|trim|numeric',[
             'required'   => 'Tarif harus diisi!',
             'numeric'    => 'Tarif harus angka!'
         ]);
@@ -304,7 +304,7 @@ class Admin extends CI_Controller
             'required'   => 'Daya harus diisi!',
         ]);
 
-        $this->form_validation->set_rules('tarif', 'Tarif', 'required|trim|numeric',[
+        $this->form_validation->set_rules('tarif_perkwh', 'Tarif', 'required|trim|numeric',[
             'required'   => 'Tarif harus diisi!',
             'numeric'    => 'Tarif harus angka!'
         ]);
