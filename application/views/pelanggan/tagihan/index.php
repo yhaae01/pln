@@ -6,18 +6,6 @@
 
         <div class="row">
             <div class="col-lg-6">
-            <?= $this->session->flashdata('message'); ?>
-
-            <?php if ($tagihan['status'] === 'Dibayar') : ?>
-                <div class="alert alert-success" role="alert">
-                    Tagihan bulan ini sudah dibayar.
-                </div>
-            <?php elseif ($tagihan['status'] === 'Belum Dibayar') : ?>
-                <div class="alert alert-danger" role="alert">
-                Tagihan bulan ini <strong>belum dibayar</strong>.
-                </div>
-            <?php endif ?>
-
                 <div class="card">
                     <?php if (!empty($tagihan['id_tagihan'])) : ?>
                     <table class="table mb-3">

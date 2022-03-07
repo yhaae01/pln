@@ -6,11 +6,10 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <?= $this->session->flashdata('message'); ?>
                 <a href="<?= base_url('admin/tambah_penggunaan') ?>" class="btn btn-sm btn-primary mb-3">
                     <span class="fas fa-plus-circle"></span> Tambah Penggunaan
                 </a>
-                <table class="table table-hover">
+                <table class="table table-hover table-responsive">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

@@ -14,7 +14,22 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Silahkan Login!</h1>
                                 </div>
-                                <?= $this->session->flashdata('message'); ?>
+                                <?php if($this->session->flashdata('pwadmin_salah')){ ?>
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('pwadmin_salah'); ?>
+                                    </div>
+                                <?php } else if($this->session->flashdata('usadmin_salah')){  ?>
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('usadmin_salah'); ?>
+                                    </div>
+                                <?php } else if($this->session->flashdata('logout_admin')){  ?>
+                                <div class="alert alert-success">
+                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <?= $this->session->flashdata('logout_admin'); ?>
+                                </div>
+                                <?php } ?>
                                 <form class="user" method="post" action="<?= base_url('auth/login_admin') ?>">
                                     <div class="form-group">
                                         <input type="text" class="form-control"

@@ -14,7 +14,27 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Silahkan Login!</h1>
                                 </div>
-                                <?= $this->session->flashdata('message'); ?>
+                                <?php if($this->session->flashdata('pwpelanggan_salah')){ ?>
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('pwpelanggan_salah'); ?>
+                                    </div>
+                                <?php } else if($this->session->flashdata('uspelanggan_salah')){  ?>
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('uspelanggan_salah'); ?>
+                                    </div>
+                                <?php } else if($this->session->flashdata('reg_pelanggan')){  ?>
+                                    <div class="alert alert-success">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('reg_pelanggan'); ?>
+                                    </div>
+                                <?php } else if($this->session->flashdata('logout_pelanggan')){  ?>
+                                    <div class="alert alert-success">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <?= $this->session->flashdata('logout_pelanggan'); ?>
+                                    </div>
+                                <?php } ?>
                                 <form class="user" method="post" action="<?= base_url('auth/login_pelanggan') ?>">
                                     <div class="form-group">
                                         <input type="text" class="form-control"

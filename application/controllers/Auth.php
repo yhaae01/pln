@@ -45,15 +45,21 @@ class Auth extends CI_Controller
                     $this->session->set_userdata($data); // Menyimpan data di session
                     redirect('admin');
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                    $this->session->set_flashdata(
+                        'pwadmin_salah', // pw adalah password
+                        '<div class="alert alert-danger" role="alert">
                         Oops! Password salah.
-                    </div>');
+                        </div>'
+                    );
                     redirect('auth/login_admin');
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                $this->session->set_flashdata(
+                    'usadmin_salah', // us adalah username
+                    '<div class="alert alert-danger" role="alert">
                     Oops! Username tidak terdaftar.
-                    </div>');
+                    </div>'
+                );
                 redirect('auth/login_admin');
             }
         }
@@ -119,15 +125,21 @@ class Auth extends CI_Controller
                     $this->session->set_userdata($data); // Menyimpan data di session
                     redirect('pelanggan');
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                    $this->session->set_flashdata(
+                        'pwpelanggan_salah', // pw adalah password
+                        '<div class="alert alert-danger" role="alert">
                         Oops! Password salah.
-                    </div>');
+                        </div>'
+                    );
                     redirect('auth/login_pelanggan');
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                $this->session->set_flashdata(
+                    'uspelanggan_salah', // us adalah username
+                    '<div class="alert alert-danger" role="alert">
                     Oops! Username tidak terdaftar.
-                    </div>');
+                    </div>'
+                );
                 redirect('auth/login_pelanggan');
             }
         }
@@ -185,9 +197,12 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_user');
         session_destroy();
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        $this->session->set_flashdata(
+            'logout_admin', 
+            '<div class="alert alert-success" role="alert">
             Berhasil logout.
-        </div>');
+            </div>'
+        );
         redirect('auth/login_admin');
     }
 
@@ -197,9 +212,12 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_pelanggan');
         session_destroy();
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        $this->session->set_flashdata(
+            'logout_pelanggan', 
+            '<div class="alert alert-success" role="alert">
             Berhasil logout.
-        </div>');
+            </div>'
+        );
         redirect('auth/login_pelanggan');
     }
 }

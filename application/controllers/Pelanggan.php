@@ -24,6 +24,7 @@ class Pelanggan extends CI_Controller
         $data['user'] = $this->db->get_where('pelanggan', [
             'username' => $this->session->userdata('username')
         ])->row_array();
+        $data['tagihan'] = $this->pelanggan->cekTagihanPel(['id_pelanggan' => $this->session->userdata('id_pelanggan')]);
         $data['title'] = 'Dashboard Pelanggan';
 
         $this->load->view('templates/header', $data);
