@@ -4,6 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pelanggan_model extends CI_Model 
 {
+    public function selectPelanggan()
+    {
+        return $this->db->get('pelanggan');
+    }
 
     public function getAllDataPelanggan()
     {
