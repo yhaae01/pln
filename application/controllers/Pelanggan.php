@@ -12,9 +12,10 @@ class Pelanggan extends CI_Controller
         $this->load->model('Admin_model', 'admin');
         
         if (!$this->session->userdata('id_pelanggan')) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-                Silahkan login terlebih dahulu!
-            </div>');
+            $this->session->set_flashdata(
+                'message', 
+                'Silahkan login!'
+            );
             redirect('auth/login_pelanggan');
         }
     }
@@ -68,9 +69,10 @@ class Pelanggan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $this->pelanggan->pembayaran();
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-                Berhasil bayar tagihan!
-            </div>');
+            $this->session->set_flashdata(
+                'message', 
+                'bayar tagihan.'
+            );
             redirect('pelanggan/tagihan');
         }
     }

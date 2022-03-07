@@ -30,9 +30,7 @@ class Admin_model extends CI_Model
         
         $this->session->set_flashdata(
             'message', 
-            '<div class="alert alert-success" role="alert">
-            Data tarif berhasil ditambahkan.
-            </div>'
+            'ditambah.'
         );
         redirect('admin/tarif');
     }
@@ -50,9 +48,7 @@ class Admin_model extends CI_Model
 
         $this->session->set_flashdata(
             'message',
-            '<div class="alert alert-success" role="alert">
-            Data Tarif berhasil diubah.
-            </div>'
+            'diubah.'
         );
         redirect('admin/tarif');
     }
@@ -62,9 +58,7 @@ class Admin_model extends CI_Model
         $this->db->delete('tarif', ['id_tarif' => $id_tarif]);
         $this->session->set_flashdata(
             'message',
-            '<div class="alert alert-success" role="alert">
-            Data tarif berhasil dihapus.
-            </div>'
+            'dihapus.'
         );
         redirect('admin/tarif');
     }
@@ -73,10 +67,8 @@ class Admin_model extends CI_Model
     {
         $this->db->delete('tagihan', ['id_tagihan' => $id_tagihan]);
         $this->session->set_flashdata(
-            'hapus_tagihan',
-            '<div class="alert alert-success" role="alert">
-            Data tagihan berhasil dihapus.
-            </div>'
+            'message',
+            'dihapus.'
         );
         redirect('admin/tagihan');
     }
@@ -95,10 +87,8 @@ class Admin_model extends CI_Model
         $this->db->insert('pelanggan', $data);
         
         $this->session->set_flashdata(
-            'tambah_pelanggan', 
-            '<div class="alert alert-success" role="alert">
-            Berhasil daftar akun! Silahkan login.
-            </div>'
+            'message', 
+            'ditambah.'
         );
         redirect('admin/pelanggan');
     }
@@ -117,10 +107,8 @@ class Admin_model extends CI_Model
         $this->db->update('pelanggan', $data);
 
         $this->session->set_flashdata(
-            'ubah_pelanggan',
-            '<div class="alert alert-success" role="alert">
-            Data pelanggan berhasil diubah.
-            </div>'
+            'message',
+            'diubah.'
         );
         redirect('admin/pelanggan');
     }
@@ -129,10 +117,8 @@ class Admin_model extends CI_Model
     {
         $this->db->delete('pelanggan', ['id_pelanggan' => $id_pelanggan]);
         $this->session->set_flashdata(
-            'hapus_pelanggan',
-            '<div class="alert alert-success" role="alert">
-            Data pelanggan berhasil dihapus.
-            </div>'
+            'message',
+            'dihapus.'
         );
         redirect('admin/pelanggan');
     }
@@ -160,10 +146,8 @@ class Admin_model extends CI_Model
         $this->db->insert('penggunaan', $data);
         
         $this->session->set_flashdata(
-            'tambah_penggunaan', 
-            '<div class="alert alert-success" role="alert">
-            Data penggunaan berhasil ditambahkan.
-            </div>'
+            'message', 
+            'ditambah.'
         );
         redirect('admin/penggunaan');
     }
@@ -180,10 +164,8 @@ class Admin_model extends CI_Model
         $this->db->update('penggunaan', $data);
 
         $this->session->set_flashdata(
-            'ubah_penggunaan',
-            '<div class="alert alert-success" role="alert">
-            Data penggunaan berhasil diubah.
-            </div>'
+            'message',
+            'diubah'
         );
         redirect('admin/penggunaan');
     }
@@ -192,10 +174,8 @@ class Admin_model extends CI_Model
     {
         $this->db->delete('penggunaan', ['id_penggunaan' => $id_penggunaan]);
         $this->session->set_flashdata(
-            'hapus_penggunaan',
-            '<div class="alert alert-success" role="alert">
-            Data penggunaan berhasil dihapus.
-            </div>'
+            'message',
+            'dihapus'
         );
         redirect('admin/penggunaan');
     }

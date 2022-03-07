@@ -17,10 +17,8 @@ class Auth_model extends CI_Model
         $this->db->insert('user', $data);
         
         $this->session->set_flashdata(
-            'regadmin', 
-            '<div class="alert alert-success" role="alert">
-            Berhasil daftar akun! Silahkan login.
-            </div>'
+            'message', 
+            'daftar akun! Silahkan login.'
         );
         redirect('auth/login_admin');
     }
@@ -39,10 +37,8 @@ class Auth_model extends CI_Model
         $this->db->insert('pelanggan', $data);
         
         $this->session->set_flashdata(
-            'reg_pelanggan', 
-            '<div class="alert alert-success" role="alert">
-            Berhasil daftar akun! Silahkan login.
-            </div>'
+            'message', 
+            'daftar akun! Silahkan login.'
         );
         redirect('auth/login_pelanggan');
     }

@@ -6,6 +6,7 @@
 
         <div class="row">
             <div class="col-lg-12">
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                 <table class="table table-hover table-responsive">
                     <thead>
                         <tr>

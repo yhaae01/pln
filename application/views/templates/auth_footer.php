@@ -10,7 +10,7 @@
 
     <!-- Sweetalert2 -->
     <script src="<?= base_url('assets/') ?>sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="<?= base_url('assets/') ?>js/myscript.js"></script>
+    <script src="<?= base_url('assets/') ?>js/myscript2.js"></script>
 
 </body>
 

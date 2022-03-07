@@ -5,6 +5,7 @@
         <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
         <div class="row">
             <div class="col-lg-6 col-md-8">
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                 <div class="card">
                     <?php if (!empty($tagihan['status'] == 'Belum Dibayar')) : ?>
                         <div class="card-block col-md mx-auto my-2">

@@ -6,6 +6,7 @@
 
         <div class="row">
             <div class="col-lg-12">
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                 <a href="<?= base_url('admin/tambah_penggunaan') ?>" class="btn btn-sm btn-primary mb-3">
                     <span class="fas fa-plus-circle"></span> Tambah Penggunaan
                 </a>
