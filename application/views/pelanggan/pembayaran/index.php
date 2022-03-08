@@ -10,11 +10,16 @@
                     <?php if (!empty($tagihan['status'] == 'Belum Dibayar')) : ?>
                         <div class="card-block col-md mx-auto my-2">
 
-                            <table class="table table-responsive">
+                            <table class="table">
                                 <tr>
                                     <th style="width: 140px">Nama</th>
                                     <td style="width: 5px;">:</td>
                                     <td><?= $user['nama_pelanggan']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Daya</th>
+                                    <td>:</td>
+                                    <td><?= $tagihan['daya']; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Jumlah Meter</th>
